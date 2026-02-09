@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Blood Donation System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-user-plus text-danger fa-3x mb-3"></i>
+                            <h2 class="fw-bold">Register</h2>
+                            <p class="text-muted">Join our blood donation community</p>
+                        </div>
+
+                        <form id="registerForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="password" class="form-label">Password *</label>
+                                    <input type="password" class="form-control" id="password" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                                    <input type="password" class="form-control" id="confirmPassword" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="+8801XXXXXXXXX" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="bloodGroup" class="form-label">Blood Group *</label>
+                                    <select class="form-select" id="bloodGroup" required>
+                                        <option value="">Select Blood Group</option>
+                                        <option value="A+">A+ (A Positive)</option>
+                                        <option value="A-">A- (A Negative)</option>
+                                        <option value="B+">B+ (B Positive)</option>
+                                        <option value="B-">B- (B Negative)</option>
+                                        <option value="AB+">AB+ (AB Positive)</option>
+                                        <option value="AB-">AB- (AB Negative)</option>
+                                        <option value="O+">O+ (O Positive)</option>
+                                        <option value="O-">O- (O Negative)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="userType" class="form-label">Register As *</label>
+                                <select class="form-select" id="userType" required>
+                                    <option value="">Select User Type</option>
+                                    <option value="donor">Blood Donor</option>
+                                    <option value="requester">Blood Requester</option>
+                                    <option value="hospital">Hospital Representative</option>
+                                </select>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="district" class="form-label">District *</label>
+                                    <select class="form-select" id="district" required>
+                                        <option value="">Select District</option>
+                                        <option value="Dhaka">Dhaka</option>
+                                        <option value="Chittagong">Chittagong</option>
+                                        <option value="Sylhet">Sylhet</option>
+                                        <option value="Rajshahi">Rajshahi</option>
+                                        <option value="Khulna">Khulna</option>
+                                        <option value="Barisal">Barisal</option>
+                                        <option value="Rangpur">Rangpur</option>
+                                        <option value="Mymensingh">Mymensingh</option>
+                                        <option value="Gazipur">Gazipur</option>
+                                        <option value="Narayanganj">Narayanganj</option>
+                                        <option value="Comilla">Comilla</option>
+                                        <option value="Feni">Feni</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="upazila" class="form-label">Upazila</label>
+                                    <input type="text" class="form-control" id="upazila" placeholder="Enter Upazila">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="address" class="form-label">Full Address</label>
+                                <textarea class="form-control" id="address" rows="2" placeholder="Enter your full address"></textarea>
+                            </div>
+
+                            <div id="donorFields" style="display: none;">
+                                <h5 class="text-danger mb-3">Donor Information</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="weight" class="form-label">Weight (kg)</label>
+                                        <input type="number" class="form-control" id="weight" min="50" placeholder="Minimum 50kg">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="lastDonation" class="form-label">Last Donation Date</label>
+                                        <input type="date" class="form-control" id="lastDonation">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                                <label class="form-check-label" for="agreeTerms">
+                                    I agree to the <a href="#" class="text-danger">Terms and Conditions</a>
+                                </label>
+                            </div>
+
+                            <button type="submit" class="btn btn-danger w-100 mb-3">Register</button>
+                        </form>
+
+                        <div class="text-center">
+                            <p class="mb-0">Already have an account? <a href="login.html" class="text-danger">Login here</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="../data/hospitals.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Show/hide donor fields based on user type
+        document.getElementById('userType').addEventListener('change', function() {
+            const donorFields = document.getElementById('donorFields');
+            if (this.value === 'donor') {
+                donorFields.style.display = 'block';
+            } else {
+                donorFields.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
