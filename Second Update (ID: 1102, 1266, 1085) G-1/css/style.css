@@ -1,0 +1,126 @@
+:root {
+    --primary-color: #dc3545;
+    --secondary-color: #ffffff;
+    --success-color: #198754;
+    --warning-color: #ffc107;
+    --danger-color: #f9132a;
+    --light-color: #f7fbff;
+    --dark-color: #212529;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #000000, #100f0f);
+    color: white;
+    padding: 100px 0;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+}
+
+.stat-card {
+    background: rgb(14, 7, 6);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid rgb(255, 11, 11);
+}
+
+.stat-card h3 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.blood-group-badge {
+    display: inline-block;
+    background: var(--danger-color);
+    color: rgb(255, 255, 255);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin: 5px;
+}
+
+.donor-card {
+    background: rgb(0, 0, 0);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgb(255, 255, 255);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.donor-card:hover {
+    transform: translateY(-5px);
+}
+
+.hospital-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgb(255, 254, 254);
+    margin-bottom: 20px;
+    border-left: 4px solid var(--danger-color);
+}
+
+.search-section {
+    background: var(--light-color);
+    padding: 60px 0;
+}
+
+.dashboard-sidebar {
+    background: var(--dark-color);
+    min-height: 100vh;
+    padding: 20px 0;
+}
+
+.sidebar-nav .nav-link {
+    color: #000000;
+    padding: 12px 20px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.sidebar-nav .nav-link:hover,
+.sidebar-nav .nav-link.active {
+    background: var(--danger-color);
+    color: white;
+}
+
+.form-control:focus {
+    border-color: var(--danger-color);
+    box-shadow: 0 0 0 0.2rem rgb(255, 0, 25);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-danger:hover {
+    background-color: #ff1038;
+    border-color: #ff0019;
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+        text-align: center;
+    }
+    .stat-card h3 {
+        font-size: 2rem;
+    }
+}
