@@ -1,4 +1,4 @@
-// Authentication Controller
+// Authentication Control
 class AuthController {
     constructor() {
         this.users = JSON.parse(localStorage.getItem('users')) || [];
@@ -12,6 +12,7 @@ class AuthController {
     }
 
     bindAuthEvents() {
+        
         // Login form
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
