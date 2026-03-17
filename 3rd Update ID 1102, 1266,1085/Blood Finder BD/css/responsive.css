@@ -1,0 +1,194 @@
+/* responsive.css - Mobile-First Responsive Design */
+
+
+/* Mobile First - Base styles */
+
+@media (max-width: 576px) {
+    .hero-section {
+        padding: 40px 0;
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    .stat-card {
+        margin-bottom: 15px;
+    }
+    .stat-card h3 {
+        font-size: 1.8rem;
+    }
+    .donor-card,
+    .hospital-card {
+        margin-bottom: 15px;
+    }
+    .donor-card .row,
+    .hospital-card .row {
+        text-align: center;
+    }
+    .donor-card .col-md-4,
+    .hospital-card .col-md-4 {
+        margin-top: 15px;
+    }
+    /* Dashboard mobile adjustments */
+    .sidebar {
+        position: fixed;
+        top: 56px;
+        left: -100%;
+        height: calc(100vh - 56px);
+        transition: left 0.3s ease;
+        z-index: 1040;
+        background: var(--dark-color);
+        width: 250px;
+    }
+    .sidebar.show {
+        left: 0;
+    }
+    .sidebar-nav .nav-link {
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    main.col-md-9 {
+        margin-left: 0;
+        width: 100%;
+    }
+    /* Form adjustments */
+    .modal-dialog {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+    .btn-group-vertical .btn {
+        margin-bottom: 10px;
+    }
+    /* Search forms */
+    .search-section .row .col-md-3,
+    .search-section .row .col-md-4 {
+        margin-bottom: 15px;
+    }
+    /* Cards on mobile */
+    .card {
+        margin-bottom: 15px;
+    }
+    .card-body {
+        padding: 15px;
+    }
+}
+
+
+/* Tablet styles */
+
+@media (min-width: 577px) and (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+    .stat-card h3 {
+        font-size: 2.2rem;
+    }
+    .sidebar {
+        width: 200px;
+    }
+    main.col-md-9 {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+
+
+/* Desktop styles */
+
+@media (min-width: 992px) {
+    .sidebar {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        height: calc(100vh - 56px);
+        overflow-y: auto;
+    }
+    main.col-lg-10 {
+        margin-left: 16.66666667%;
+    }
+}
+
+
+/* Print styles */
+
+@media print {
+    .navbar,
+    .sidebar,
+    .btn,
+    .modal {
+        display: none !important;
+    }
+    main {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    .card {
+        border: 1px solid #000 !important;
+        break-inside: avoid;
+    }
+    .hero-section {
+        background: white !important;
+        color: black !important;
+    }
+}
+
+
+/* High contrast mode */
+
+@media (prefers-contrast: high) {
+     :root {
+        --primary-color: #000;
+        --secondary-color: #666;
+        --light-color: #fff;
+        --dark-color: #000;
+    }
+    .card {
+        border: 2px solid #000;
+    }
+    .btn {
+        border: 2px solid #000;
+    }
+}
+
+
+/* Reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+
+/* Dark mode support */
+
+@media (prefers-color-scheme: dark) {
+     :root {
+        --light-color: #212529;
+        --dark-color: #f8f9fa;
+    }
+    body {
+        background-color: #212529;
+        color: #f8f9fa;
+    }
+    .card {
+        background-color: #343a40;
+        border-color: #495057;
+    }
+    .form-control {
+        background-color: #495057;
+        border-color: #6c757d;
+        color: #f8f9fa;
+    }
+    .navbar-light {
+        background-color: #343a40 !important;
+    }
+}
