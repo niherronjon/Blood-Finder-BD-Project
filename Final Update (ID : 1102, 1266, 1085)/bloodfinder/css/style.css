@@ -1,0 +1,348 @@
+/* ============================================================
+   FILE 16: css/style.css
+   Global + Homepage Styles (Original preserved + extended)
+   ============================================================ */
+
+
+/* GLOBAL */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+}
+
+
+/* NAVBAR */
+
+.custom-navbar {
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #ff0000;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.nav-link {
+    color: white !important;
+    transition: .3s;
+}
+
+.nav-link:hover {
+    color: #ff0000 !important;
+}
+
+
+/* HERO SECTION */
+
+.hero-section {
+    min-height: 100vh;
+    background: linear-gradient(to right, #000000 60%, #140000 100%);
+    padding-top: 100px;
+}
+
+
+/* STATS BOX */
+
+.stats-box {
+    background: linear-gradient(145deg, #111, #1a0000);
+    border: 1px solid #ff0000;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 0, 0, .4);
+}
+
+
+/* STAT CARD */
+
+.stat-card {
+    background: #000;
+    border: 1px solid #ff0000;
+    padding: 20px;
+    border-radius: 15px;
+    transition: .3s;
+}
+
+.stat-card h2 {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+.stat-card p {
+    color: white;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255, 0, 0, .6);
+}
+
+
+/* BUTTONS */
+
+.custom-btn {
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: .3s;
+}
+
+.custom-btn:hover {
+    background: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, .7);
+}
+
+.custom-btn-outline {
+    border-radius: 50px;
+    transition: .3s;
+}
+
+.custom-btn-outline:hover {
+    background: #ff0000;
+    color: white !important;
+}
+
+
+/* ── QUICK SEARCH ────────────────────────────────────────── */
+
+.quick-search-section {
+    background: linear-gradient(135deg, #0a0000, #150000);
+    border-top: 1px solid rgba(255, 0, 0, .2);
+    border-bottom: 1px solid rgba(255, 0, 0, .2);
+}
+
+.quick-search-box {
+    background: rgba(20, 0, 0, .8);
+    border: 1px solid rgba(255, 0, 0, .3);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.custom-input {
+    background: #0a0000 !important;
+    border: 1px solid #ff0000 !important;
+    color: white !important;
+    border-radius: 10px;
+}
+
+.custom-input:focus {
+    background: #0a0000 !important;
+    border-color: #ff4444 !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, .4) !important;
+    color: white !important;
+}
+
+.custom-input option {
+    background: #1a0000;
+    color: white;
+}
+
+
+/* ── HOW IT WORKS ────────────────────────────────────────── */
+
+.how-it-works {
+    background: #050000;
+}
+
+.step-card {
+    background: rgba(20, 0, 0, .8);
+    border: 1px solid rgba(255, 0, 0, .2);
+    border-radius: 15px;
+    padding: 30px 20px;
+    transition: .3s;
+    position: relative;
+}
+
+.step-card:hover {
+    border-color: #ff0000;
+    box-shadow: 0 0 25px rgba(255, 0, 0, .25);
+    transform: translateY(-5px);
+}
+
+.step-number {
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(255, 0, 0, .12);
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+
+/* ── BLOOD GROUPS ────────────────────────────────────────── */
+
+.blood-groups-section {
+    background: #000;
+}
+
+.blood-group-card {
+    background: rgba(20, 0, 0, .9);
+    border: 1px solid rgba(255, 0, 0, .3);
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.blood-group-card:hover {
+    border-color: #ff0000;
+    box-shadow: 0 0 20px rgba(255, 0, 0, .3);
+    transform: scale(1.03);
+}
+
+.blood-group-badge {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ff0000;
+    display: block;
+    margin-bottom: 8px;
+}
+
+
+/* ── REQUESTS TICKER ─────────────────────────────────────── */
+
+.requests-ticker {
+    background: #0a0000;
+    border-top: 1px solid rgba(255, 0, 0, .2);
+}
+
+.ticker-wrapper {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ticker-label {
+    color: white;
+    font-weight: bold;
+    white-space: nowrap;
+    margin-right: 20px;
+    min-width: fit-content;
+}
+
+.ticker-content {
+    color: rgba(255, 255, 255, .7);
+    animation: ticker-scroll 30s linear infinite;
+    display: inline-block;
+}
+
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(100vw);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+
+.footer {
+    background: #050000;
+    border-top: 1px solid rgba(255, 0, 0, .2);
+}
+
+
+/* ── ANIMATIONS ──────────────────────────────────────────── */
+
+.fade-in-left {
+    animation: fadeLeft 1.5s ease;
+}
+
+.fade-in-right {
+    animation: fadeRight 1.5s ease;
+}
+
+@keyframes fadeLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.pulse-icon {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+        color: #ff0000;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* ── QUICK SEARCH RESULTS ────────────────────────────────── */
+
+.donor-quick-card {
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(255, 0, 0, .2);
+    border-radius: 10px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: .2s;
+}
+
+.donor-quick-card:hover {
+    border-color: #ff0000;
+}
+
+.donor-avatar-sm {
+    width: 40px;
+    height: 40px;
+    background: #ff0000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: .85rem;
+    flex-shrink: 0;
+}
+
+.available-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .hero-section {
+        text-align: center;
+    }
+    .stats-box {
+        margin-top: 40px;
+    }
+}

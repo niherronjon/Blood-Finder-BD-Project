@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Request Blood - BloodFinder BD</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style-request-blood.css" rel="stylesheet">
+</head>
+
+<body class="request-body">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i class="fas fa-heartbeat pulse-icon"></i> BloodFinder BD
+            </a>
+            <div class="ms-auto d-flex gap-2">
+                <a href="donor-dashboard.html" class="btn btn-outline-danger btn-sm">
+                    <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                </a>
+                <a href="../index.html" class="btn btn-outline-light btn-sm">
+                    <i class="fas fa-home me-1"></i> Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container request-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+
+                <div class="request-card">
+
+                    <div class="text-center mb-4">
+                        <i class="fas fa-hand-holding-medical request-icon"></i>
+                        <h2 class="text-white fw-bold mt-3">Blood Request Form</h2>
+                        <p class="text-light small">Submit urgent blood requirements safely and instantly notify available donors</p>
+                    </div>
+
+                    <div id="alertBox" class="alert d-none mb-3" role="alert"></div>
+
+                    <form id="requestForm">
+
+                        <!-- Patient Info -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Patient Name *</label>
+                                <input type="text" class="form-control custom-input" id="patientName" placeholder="Full patient name" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Blood Group *</label>
+                                <select class="form-select custom-input" id="bloodGroup" required>
+                                    <option value="">Select Blood Group</option>
+                                    <option>A+</option><option>A-</option>
+                                    <option>B+</option><option>B-</option>
+                                    <option>AB+</option><option>AB-</option>
+                                    <option>O+</option><option>O-</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Units + Urgency -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Units Needed *</label>
+                                <input type="number" class="form-control custom-input" id="units" min="1" max="10" value="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Urgency *</label>
+                                <select class="form-select custom-input" id="urgency" required>
+                                    <option value="">Select Urgency</option>
+                                    <option value="Emergency">🔴 Emergency (Within 2 Hours)</option>
+                                    <option value="Urgent">🟡 Urgent (Within 24 Hours)</option>
+                                    <option value="Normal">🟢 Normal (Within 7 Days)</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <!-- Hospital + District -->
+
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label text-light">Hospital Name *</label>
+                                <input type="text" class="form-control custom-input" id="hospital" placeholder="e.g. Dhaka Medical College Hospital" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-light">District *</label>
+                                <select class="form-select custom-input" id="district" required>
+                                    <option value="">District</option>
+                                    <option>Dhaka</option><option>Chittagong</option>
+                                    <option>Sylhet</option><option>Rajshahi</option>
+                                    <option>Khulna</option><option>Barisal</option>
+                                    <option>Rangpur</option><option>Mymensingh</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <!-- Required Date -->
+
+                        <div class="mb-3">
+                            <label class="form-label text-light">Required Date & Time *</label>
+                            <input type="datetime-local" class="form-control custom-input" id="requiredDate" required>
+                        </div>
+
+                        <!-- Contact -->
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Contact Person *</label>
+                                <input type="text" class="form-control custom-input" id="contactPerson" placeholder="Who to call" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Contact Phone *</label>
+                                <input type="tel" class="form-control custom-input" id="contactPhone" placeholder="01XXXXXXXXX" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-light">Additional Notes</label>
+                            <textarea class="form-control custom-input" id="notes" rows="3" placeholder="Any additional information..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100 request-btn" id="submitBtn">
+                            <span id="reqSpinner" class="spinner-border spinner-border-sm me-2 d-none"></span>
+                            <i class="fas fa-paper-plane me-2"></i>Submit Blood Request
+                        </button>
+                    </form>
+
+                </div>
+
+                <!-- Active Requests Section -->
+                <div class="mt-4">
+                    <h4 class="text-white mb-3"><i class="fas fa-list text-danger me-2"></i>Recent Active Requests</h4>
+                    <div id="activeRequestsList">
+                        <div class="text-muted text-center py-3">Loading requests...</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set min datetime to now
+        document.getElementById('requiredDate').min = new Date().toISOString().slice(0, 16);
+
+        document.getElementById('requestForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const spinner = document.getElementById('reqSpinner');
+            btn.disabled = true;
+            spinner.classList.remove('d-none');
+
+            const payload = {
+                patientName: document.getElementById('patientName').value,
+                bloodGroup: document.getElementById('bloodGroup').value,
+                units: document.getElementById('units').value,
+                urgency: document.getElementById('urgency').value,
+                hospital: document.getElementById('hospital').value,
+                district: document.getElementById('district').value,
+                requiredDate: document.getElementById('requiredDate').value,
+                contactPerson: document.getElementById('contactPerson').value,
+                contactPhone: document.getElementById('contactPhone').value,
+                notes: document.getElementById('notes').value
+            };
+
+            try {
+                const res = await fetch('../api/requests.php?action=create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showAlert('success', '✅ ' + data.message + ' Matching donors have been notified!');
+                    document.getElementById('requestForm').reset();
+                    loadActiveRequests();
+                } else {
+                    showAlert('danger', '❌ ' + data.message);
+                }
+            } catch (err) {
+                showAlert('danger', 'Connection error. Ensure PHP server is running.');
+            }
+            btn.disabled = false;
+            spinner.classList.add('d-none');
+        });
+
+        async function loadActiveRequests() {
+            try {
+                const res = await fetch('../api/requests.php?action=list&status=Active');
+                const data = await res.json();
+                if (!data.success) return;
+                const el = document.getElementById('activeRequestsList');
+                if (!data.data.requests.length) {
+                    el.innerHTML = '<p class="text-muted text-center">No active requests.</p>';
+                    return;
+                }
+                el.innerHTML = data.data.requests.slice(0, 5).map(r => `
+                    <div class="request-item-card mb-3 p-3 rounded border border-danger bg-dark">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <span class="badge bg-danger me-2">${r.blood_group}</span>
+                                <span class="badge ${r.urgency==='Emergency'?'bg-danger':r.urgency==='Urgent'?'bg-warning text-dark':'bg-success'} me-2">${r.urgency}</span>
+                                <strong class="text-white">${r.patient_name}</strong>
+                            </div>
+                            <small class="text-muted">${new Date(r.created_at).toLocaleDateString()}</small>
+                        </div>
+                        <p class="text-light small mb-1 mt-2"><i class="fas fa-hospital me-1"></i>${r.hospital_name}</p>
+                        <p class="text-light small mb-0"><i class="fas fa-phone me-1"></i>${r.contact_phone} &nbsp;|&nbsp; ${r.units_needed} unit(s) needed</p>
+                    </div>
+                `).join('');
+            } catch (e) {}
+        }
+
+        function showAlert(type, msg) {
+            const a = document.getElementById('alertBox');
+            a.className = `alert alert-${type}`;
+            a.innerHTML = msg;
+            a.classList.remove('d-none');
+            a.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        }
+
+        loadActiveRequests();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+/* ============================================================
+   FILE 18: css/style-register.css — Register Page (Original + Steps)
+   ============================================================ */
+
+.register-body {
+    background: linear-gradient(to right, #000000, #140000);
+    min-height: 100vh;
+}
+
+.register-card {
+    background: rgba(20, 0, 0, .95);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 50px rgba(255, 0, 0, .4);
+    animation: fadeUp 1.2s ease;
+}
+
+.register-icon {
+    font-size: 3rem;
+    color: #ff0000;
+    animation: pulse 1.5s infinite;
+}
+
+.register-btn {
+    border-radius: 50px;
+    font-weight: bold;
+    padding: 12px;
+    transition: .3s;
+    -webkit-transition: .3s;
+    -moz-transition: .3s;
+    -ms-transition: .3s;
+    -o-transition: .3s;
+}
+
+.register-btn:hover {
+    box-shadow: 0 0 20px rgba(255, 0, 0, .8);
+}
+
+
+/* Step indicator */
+
+.register-steps {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.step {
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: .8rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, .4);
+    border: 1px solid rgba(255, 0, 0, .2);
+    background: rgba(20, 0, 0, .5);
+    transition: .3s;
+}
+
+.step.active {
+    color: white;
+    border-color: #ff0000;
+    background: rgba(255, 0, 0, .15);
+}
+
+.step-divider {
+    flex: 1;
+    max-width: 30px;
+    height: 1px;
+    background: rgba(255, 0, 0, .2);
+}
+
+
+/* Inputs */
+
+.custom-input {
+    background: #000 !important;
+    border: 1px solid #ff0000 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.custom-input:focus {
+    background: #000 !important;
+    border-color: #ff4444 !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, .4) !important;
+    color: white !important;
+}
+
+.custom-input option {
+    background: #1a0000;
+}
+
+select.custom-input option {
+    background: #140000;
+    color: white;
+}
+
+.form-check-input {
+    border-color: #ff0000 !important;
+    background: transparent;
+}
+
+.form-check-input:checked {
+    background-color: #ff0000 !important;
+    border-color: #ff0000 !important;
+}
+
+
+/* Reuse animations */
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.15);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

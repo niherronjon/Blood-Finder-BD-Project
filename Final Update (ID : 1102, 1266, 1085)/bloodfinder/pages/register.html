@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - BloodFinder BD</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style-register.css" rel="stylesheet">
+</head>
+
+<body class="register-body">
+
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+
+                <div class="register-card">
+
+                    <div class="text-center mb-4">
+                        <a href="../index.html"><i class="fas fa-user-plus register-icon"></i></a>
+                        <h2 class="fw-bold text-white mt-3">Create Account</h2>
+                        <p class="text-light small">Join the Blood Donation Community</p>
+                    </div>
+
+                    <!-- Progress Steps -->
+                    <div class="register-steps mb-4">
+                        <div class="step active" id="step1Indicator">1. Account</div>
+                        <div class="step-divider"></div>
+                        <div class="step" id="step2Indicator">2. Personal</div>
+                        <div class="step-divider"></div>
+                        <div class="step" id="step3Indicator">3. Donor Info</div>
+                    </div>
+
+                    <div id="alertBox" class="alert d-none mb-3" role="alert"></div>
+
+                    <form id="registerForm">
+
+                        <!-- STEP 1: Account Info -->
+                        <div id="step1">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Full Name *</label>
+                                    <input type="text" class="form-control custom-input" id="name" placeholder="Example Name: Niher Ronjon Pramanik" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Email *</label>
+                                    <input type="email" class="form-control custom-input" id="email" placeholder="you@example.com" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Password *</label>
+                                    <input type="password" class="form-control custom-input" id="password" placeholder="Min 6 characters" required>
+                                    <div class="password-strength mt-1" id="passwordStrength"></div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Confirm Password *</label>
+                                    <input type="password" class="form-control custom-input" id="confirmPassword" placeholder="Repeat password" required>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-danger w-100 register-btn" onclick="nextStep(2)">
+                                Next <i class="fas fa-arrow-right ms-2"></i>
+                            </button>
+                        </div>
+
+                        <!-- STEP 2: Personal Info -->
+                        <div id="step2" style="display:none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Phone *</label>
+                                    <input type="tel" class="form-control custom-input" id="phone" placeholder="01XXXXXXXXX" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Blood Group *</label>
+                                    <select class="form-select custom-input" id="bloodGroup" required>
+                                        <option value="">Select Blood Group</option>
+                                        <option>A+</option><option>A-</option>
+                                        <option>B+</option><option>B-</option>
+                                        <option>AB+</option><option>AB-</option>
+                                        <option>O+</option><option>O-</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-light">Register As *</label>
+                                <select class="form-select custom-input" id="userType" required>
+                                    <option value="">Select Role</option>
+                                    <option value="donor">Blood Donor</option>
+                                    <option value="requester">Blood Requester</option>
+                                    <option value="hospital">Hospital Representative</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">District *</label>
+                                    <select class="form-select custom-input" id="district" required>
+                                        <option value="">Select District</option>
+                                        <option>Dhaka</option><option>Chittagong</option>
+                                        <option>Sylhet</option><option>Rajshahi</option>
+                                        <option>Khulna</option><option>Barisal</option>
+                                        <option>Rangpur</option><option>Mymensingh</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label text-light">Upazila</label>
+                                    <input type="text" class="form-control custom-input" id="upazila" placeholder="e.g. Mirpur">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label text-light">Address</label>
+                                <textarea class="form-control custom-input" id="address" rows="2" placeholder="Full address..."></textarea>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-outline-danger w-50 register-btn" onclick="nextStep(1)">
+                                    <i class="fas fa-arrow-left me-2"></i>Back
+                                </button>
+                                <button type="button" class="btn btn-danger w-50 register-btn" onclick="nextStep(3)">
+                                    Next <i class="fas fa-arrow-right ms-2"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <!-- STEP 3: Donor / Final -->
+
+                        <div id="step3" style="display:none;">
+                            <div id="donorFields">
+                                <h5 class="text-danger mt-2 mb-3"><i class="fas fa-tint me-2"></i>Donor Information</h5>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label text-light">Weight (kg)</label>
+                                        <input type="number" class="form-control custom-input" id="weight" placeholder="e.g. 65" min="45">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label text-light">Last Donation Date</label>
+                                        <input type="date" class="form-control custom-input" id="lastDonation">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4 form-check">
+                                <input type="checkbox" class="form-check-input border-danger" id="agreeTerms" required>
+                                <label class="form-check-label text-light" for="agreeTerms">
+                                    I agree to the <a href="#" class="text-danger">Terms & Conditions</a> and <a href="#" class="text-danger">Privacy Policy</a>
+                                </label>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="button" class="btn btn-outline-danger w-50 register-btn" onclick="nextStep(2)">
+                                    <i class="fas fa-arrow-left me-2"></i>Back
+                                </button>
+                                <button type="submit" class="btn btn-danger w-50 register-btn" id="registerBtn">
+                                    <span id="regSpinner" class="spinner-border spinner-border-sm me-2 d-none"></span>
+                                    <i class="fas fa-check me-2"></i>Register
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <div class="text-center mt-3">
+                        <p class="text-light small">Already have an account? <a href="login.html" class="text-danger fw-bold">Login</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function nextStep(step) {
+            // Validate step 1
+            if (step === 2) {
+                const name = document.getElementById('name').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const pass = document.getElementById('password').value;
+                const conf = document.getElementById('confirmPassword').value;
+                if (!name || !email || !pass) return showAlert('warning', 'Please fill all required fields.');
+                if (pass.length < 6) return showAlert('warning', 'Password must be at least 6 characters.');
+                if (pass !== conf) return showAlert('danger', 'Passwords do not match.');
+            }
+            if (step === 3) {
+                const phone = document.getElementById('phone').value.trim();
+                const blood = document.getElementById('bloodGroup').value;
+                const type = document.getElementById('userType').value;
+                const dist = document.getElementById('district').value;
+                if (!phone || !blood || !type || !dist) return showAlert('warning', 'Please fill all required fields.');
+                // Show/hide donor fields based on type
+                document.getElementById('donorFields').style.display = (type === 'donor') ? 'block' : 'none';
+            }
+
+            hideAlert();
+            for (let i = 1; i <= 3; i++) {
+                document.getElementById(`step${i}`).style.display = 'none';
+                document.getElementById(`step${i}Indicator`).classList.remove('active');
+            }
+            document.getElementById(`step${step}`).style.display = 'block';
+            document.getElementById(`step${step}Indicator`).classList.add('active');
+        }
+
+        // Password strength
+        document.getElementById('password').addEventListener('input', function() {
+            const v = this.value;
+            const el = document.getElementById('passwordStrength');
+            if (v.length === 0) {
+                el.innerHTML = '';
+                return;
+            }
+            let strength = 0;
+            if (v.length >= 6) strength++;
+            if (/[A-Z]/.test(v)) strength++;
+            if (/[0-9]/.test(v)) strength++;
+            if (/[^A-Za-z0-9]/.test(v)) strength++;
+            const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+            const colors = ['', '#ff4444', '#ff8800', '#ffcc00', '#00cc44'];
+            el.innerHTML = `<small style="color:${colors[strength]}">Strength: ${labels[strength]}</small>`;
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = document.getElementById('registerBtn');
+            const spinner = document.getElementById('regSpinner');
+            if (!document.getElementById('agreeTerms').checked) return showAlert('warning', 'Please agree to Terms & Conditions.');
+
+            btn.disabled = true;
+            spinner.classList.remove('d-none');
+
+            const payload = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                confirmPassword: document.getElementById('confirmPassword').value,
+                phone: document.getElementById('phone').value,
+                bloodGroup: document.getElementById('bloodGroup').value,
+                userType: document.getElementById('userType').value,
+                district: document.getElementById('district').value,
+                upazila: document.getElementById('upazila').value,
+                address: document.getElementById('address').value,
+                weight: document.getElementById('weight').value,
+                lastDonation: document.getElementById('lastDonation').value
+            };
+
+            try {
+                const res = await fetch('../api/auth.php?action=register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showAlert('success', data.message);
+                    setTimeout(() => window.location.href = 'login.html', 1500);
+                } else {
+                    showAlert('danger', data.message);
+                    btn.disabled = false;
+                    spinner.classList.add('d-none');
+                }
+            } catch (err) {
+                showAlert('danger', 'Error: ' + err.message);
+                btn.disabled = false;
+                spinner.classList.add('d-none');
+            }
+
+        });
+
+        function showAlert(type, msg) {
+            const a = document.getElementById('alertBox');
+            a.className = `alert alert-${type}`;
+            a.textContent = msg;
+            a.classList.remove('d-none');
+            a.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest'
+            });
+        }
+
+        function hideAlert() {
+            document.getElementById('alertBox').classList.add('d-none');
+        }
+    </script>
+</body>
+
+</html>

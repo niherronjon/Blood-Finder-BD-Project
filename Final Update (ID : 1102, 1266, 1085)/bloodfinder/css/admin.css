@@ -1,0 +1,394 @@
+/* ============================================================
+   FILE 21: css/admin.css — Admin Panel Styles
+   ============================================================ */
+
+body {
+    background: #0d0d0d;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+
+/* ── LAYOUT ──────────────────────────────────────────────── */
+
+.wrapper {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+
+/* ── ADMIN SIDEBAR ───────────────────────────────────────── */
+
+.admin-sidebar {
+    width: 220px;
+    min-width: 220px;
+    background: #0a0a0a;
+    border-right: 1px solid rgba(255, 0, 0, .15);
+    padding: 20px 0;
+}
+
+.admin-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.admin-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 20px;
+    color: rgba(255, 255, 255, .6);
+    text-decoration: none;
+    font-size: .875rem;
+    transition: .2s;
+    border-left: 3px solid transparent;
+}
+
+.admin-nav li a i {
+    width: 16px;
+    text-align: center;
+}
+
+.admin-nav li a:hover,
+.admin-nav li a.active {
+    color: white;
+    background: rgba(255, 0, 0, .1);
+    border-left-color: #cc0000;
+}
+
+
+/* ── ADMIN MAIN ──────────────────────────────────────────── */
+
+.admin-main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background: #0d0d0d;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.admin-section {}
+
+
+/* ── STAT CARDS ──────────────────────────────────────────── */
+
+.admin-stat-card {
+    background: #161616;
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: .2s;
+}
+
+.admin-stat-card:hover {
+    border-color: rgba(255, 0, 0, .3);
+}
+
+.admin-stat-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.admin-stat-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: white;
+}
+
+.admin-stat-card p {
+    font-size: .78rem;
+    color: rgba(255, 255, 255, .45);
+    margin: 0;
+}
+
+
+/* ── ADMIN CARD ──────────────────────────────────────────── */
+
+.admin-card {
+    background: #161616;
+    border: 1px solid rgba(255, 255, 255, .07);
+    border-radius: 12px;
+}
+
+.admin-card h6 {
+    color: rgba(255, 255, 255, .8);
+}
+
+
+/* ── TABLES ──────────────────────────────────────────────── */
+
+.table-dark {
+    background: transparent;
+}
+
+.table-dark th {
+    background: #1a1a1a;
+    color: rgba(255, 255, 255, .55);
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    border-color: rgba(255, 255, 255, .06);
+    padding: 10px 12px;
+}
+
+.table-dark td {
+    font-size: .85rem;
+    color: rgba(255, 255, 255, .75);
+    border-color: rgba(255, 255, 255, .05);
+    vertical-align: middle;
+    padding: 10px 12px;
+}
+
+.table-hover tbody tr:hover td {
+    background: rgba(255, 0, 0, .06);
+    color: white;
+}
+
+
+/* ── BADGES ──────────────────────────────────────────────── */
+
+.status-badge {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: .72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.status-active {
+    background: rgba(40, 167, 69, .15);
+    color: #5cb85c;
+    border: 1px solid rgba(40, 167, 69, .3);
+}
+
+.status-pending {
+    background: rgba(255, 193, 7, .12);
+    color: #ffc107;
+    border: 1px solid rgba(255, 193, 7, .3);
+}
+
+.status-fulfilled {
+    background: rgba(13, 110, 253, .12);
+    color: #6ea8fe;
+    border: 1px solid rgba(13, 110, 253, .3);
+}
+
+.status-cancelled {
+    background: rgba(108, 117, 125, .12);
+    color: #adb5bd;
+    border: 1px solid rgba(108, 117, 125, .3);
+}
+
+.status-banned {
+    background: rgba(220, 53, 69, .12);
+    color: #f1707a;
+    border: 1px solid rgba(220, 53, 69, .3);
+}
+
+.urgency-emergency {
+    color: #ff4444;
+    font-weight: 700;
+}
+
+.urgency-urgent {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+.urgency-normal {
+    color: #6bcb6b;
+}
+
+
+/* ── FORM INPUTS ─────────────────────────────────────────── */
+
+.form-control,
+.form-select {
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: white;
+    font-size: .875rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: #1a1a1a;
+    border-color: #cc0000;
+    color: white;
+    box-shadow: 0 0 8px rgba(204, 0, 0, .25);
+}
+
+.form-control option,
+.form-select option {
+    background: #1a1a1a;
+}
+
+.form-label {
+    font-size: .82rem;
+    color: rgba(255, 255, 255, .6);
+}
+
+
+/* ── RECENT ITEMS ────────────────────────────────────────── */
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+}
+
+.recent-item:last-child {
+    border-bottom: none;
+}
+
+.recent-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #cc0000;
+    flex-shrink: 0;
+}
+
+.recent-item-name {
+    font-size: .85rem;
+    color: white;
+}
+
+.recent-item-meta {
+    font-size: .75rem;
+    color: rgba(255, 255, 255, .4);
+}
+
+
+/* ── ACTION BUTTONS ──────────────────────────────────────── */
+
+.btn-action {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: .75rem;
+    cursor: pointer;
+    border: none;
+    transition: .15s;
+}
+
+.btn-ban {
+    background: rgba(220, 53, 69, .15);
+    color: #f1707a;
+}
+
+.btn-unban {
+    background: rgba(40, 167, 69, .15);
+    color: #5cb85c;
+}
+
+.btn-del {
+    background: rgba(220, 53, 69, .15);
+    color: #f1707a;
+}
+
+.btn-edit {
+    background: rgba(13, 110, 253, .15);
+    color: #6ea8fe;
+}
+
+.btn-ban:hover {
+    background: rgba(220, 53, 69, .35);
+}
+
+.btn-unban:hover {
+    background: rgba(40, 167, 69, .35);
+}
+
+.btn-del:hover {
+    background: rgba(220, 53, 69, .35);
+}
+
+.btn-edit:hover {
+    background: rgba(13, 110, 253, .35);
+}
+
+
+/* ── PAGINATION ──────────────────────────────────────────── */
+
+.page-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, .1);
+    color: white;
+    cursor: pointer;
+    transition: .15s;
+    font-size: .82rem;
+}
+
+.page-btn:hover,
+.page-btn.active {
+    background: #cc0000;
+    border-color: #cc0000;
+}
+
+
+/* ── MODAL ───────────────────────────────────────────────── */
+
+.modal-content {
+    background: #161616;
+    color: white;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: rgba(255, 255, 255, .08);
+}
+
+.btn-close-white {
+    filter: invert(1);
+}
+
+
+/* ── SCROLLBAR ───────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #440000;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #880000;
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        display: none;
+    }
+    .admin-main {
+        padding: 15px;
+    }
+}

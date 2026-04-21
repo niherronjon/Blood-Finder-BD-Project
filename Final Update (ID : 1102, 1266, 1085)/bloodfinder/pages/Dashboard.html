@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - BloodFinder BD</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/admin.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-dark bg-dark fixed-top border-bottom border-danger px-3">
+        <span class="navbar-brand fw-bold"><i class="fas fa-heartbeat text-danger me-2"></i>BloodFinder Admin</span>
+        <div class="d-flex align-items-center gap-3">
+            <span class="text-white small" id="adminName">Admin</span>
+            <button class="btn btn-outline-danger btn-sm" id="adminLogout">Logout</button>
+        </div>
+    </nav>
+
+    <div class="wrapper" style="padding-top:60px;">
+
+        <!-- Sidebar -->
+        <nav class="admin-sidebar">
+            <ul class="admin-nav">
+                <li><a href="#" class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#" data-section="users"><i class="fas fa-users"></i> Users</a></li>
+                <li><a href="#" data-section="requests"><i class="fas fa-hand-holding-medical"></i> Blood Requests</a></li>
+                <li><a href="#" data-section="hospitals"><i class="fas fa-hospital"></i> Hospitals</a></li>
+                <li><a href="#" data-section="donations"><i class="fas fa-tint"></i> Donations</a></li>
+                <li><a href="#" data-section="analytics"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                <li class="mt-4"><a href="../pages/donor-dashboard.html"><i class="fas fa-arrow-left"></i> User View</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+
+            <!-- ── DASHBOARD ─────────────────────────────────── -->
+            <div id="dashboard-section" class="admin-section">
+                <h2 class="section-title">Dashboard Overview</h2>
+
+                <div class="row g-3 mb-4" id="adminStatsRow"></div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="admin-card p-4">
+                            <h6 class="mb-3">Recent Registrations</h6>
+                            <div id="recentUsers"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card p-4">
+                            <h6 class="mb-3">Recent Blood Requests</h6>
+                            <div id="recentRequests"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── USERS ─────────────────────────────────────── -->
+            <div id="users-section" class="admin-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="section-title mb-0">User Management</h2>
+                </div>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="userTypeFilter">
+                            <option value="">All Types</option>
+                            <option value="donor">Donors</option>
+                            <option value="requester">Requesters</option>
+                            <option value="hospital">Hospitals</option>
+                            <option value="admin">Admins</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" class="form-control form-control-sm" id="userSearchInput" placeholder="Search name, email, phone...">
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-danger btn-sm w-100" onclick="adminLoadUsers()">Search</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Blood</th>
+                                <th>Type</th>
+                                <th>District</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody"></tbody>
+                    </table>
+                </div>
+                <div id="usersPagination" class="d-flex justify-content-center gap-2 mt-3"></div>
+            </div>
+
+            <!-- ── REQUESTS ──────────────────────────────────── -->
+            <div id="requests-section" class="admin-section d-none">
+                <h2 class="section-title">Blood Requests</h2>
+                <div class="row g-2 mb-3">
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="reqStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="Active">Active</option>
+                            <option value="Fulfilled">Fulfilled</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select form-select-sm" id="reqBloodFilter">
+                            <option value="">All Groups</option>
+                            <option>A+</option><option>A-</option>
+                            <option>B+</option><option>B-</option>
+                            <option>AB+</option><option>AB-</option>
+                            <option>O+</option><option>O-</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-danger btn-sm w-100" onclick="adminLoadRequests()">Filter</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Patient</th>
+                                <th>Blood</th>
+                                <th>Units</th>
+                                <th>Urgency</th>
+                                <th>Hospital</th>
+                                <th>Contact</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- ── HOSPITALS ─────────────────────────────────── -->
+            <div id="hospitals-section" class="admin-section d-none">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="section-title mb-0">Hospital Management</h2>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#addHospitalModal">
+                        <i class="fas fa-plus me-1"></i>Add Hospital
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>District</th>
+                                <th>Phone</th>
+                                <th>Emergency</th>
+                                <th>Blood Bank</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hospitalsTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ── ANALYTICS ─────────────────────────────────── -->
+
+            <div id="analytics-section" class="admin-section d-none">
+                <h2 class="section-title">Analytics</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="admin-card p-4"><canvas id="adminBloodChart"></canvas></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card p-4"><canvas id="adminMonthlyChart"></canvas></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card p-4"><canvas id="adminUrgencyChart"></canvas></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="admin-card p-4"><canvas id="adminDistrictChart"></canvas></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Add Hospital Modal -->
+    <div class="modal fade" id="addHospitalModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark border-danger">
+                <div class="modal-header border-danger">
+                    <h5 class="modal-title text-white">Add Hospital</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="hospitalAlert" class="alert d-none"></div>
+                    <form id="addHospitalForm">
+                        <div class="mb-3">
+                            <label class="form-label text-light">Hospital Name *</label>
+                            <input type="text" class="form-control form-control-sm" id="hName" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">District *</label>
+                                <select class="form-select form-select-sm" id="hDistrict" required>
+                                    <option value="">Select</option>
+                                    <option>Dhaka</option><option>Chittagong</option>
+                                    <option>Sylhet</option><option>Rajshahi</option>
+                                    <option>Khulna</option><option>Barisal</option>
+                                    <option>Rangpur</option><option>Mymensingh</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Upazila</label>
+                                <input type="text" class="form-control form-control-sm" id="hUpazila">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Phone</label>
+                                <input type="text" class="form-control form-control-sm" id="hPhone">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Emergency Phone</label>
+                                <input type="text" class="form-control form-control-sm" id="hEmgPhone">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-light">Email</label>
+                            <input type="email" class="form-control form-control-sm" id="hEmail">
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="hBloodBank" checked>
+                            <label class="form-check-label text-light">Has Blood Bank</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-danger">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="submitAddHospital()">Add Hospital</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+
+</html>

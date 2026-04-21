@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BloodFinder BD</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/dashboard.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="../index.html">
+                <i class="fas fa-heartbeat pulse-icon-white me-2"></i>BloodFinder BD
+            </a>
+            <div class="navbar-nav ms-auto d-flex flex-row align-items-center gap-3">
+                <!-- Notification Bell -->
+                <div class="position-relative">
+                    <button class="btn btn-link text-white p-0" id="notifBtn" onclick="toggleNotifications()">
+                        <i class="fas fa-bell fa-lg"></i>
+                        <span class="badge bg-warning text-dark position-absolute top-0 start-100 translate-middle d-none" id="notifBadge">0</span>
+                    </button>
+
+                    <!-- Notification Dropdown -->
+                    <div class="notif-dropdown d-none" id="notifDropdown">
+                        <div class="notif-header d-flex justify-content-between align-items-center p-3">
+                            <strong>Notifications</strong>
+                            <button class="btn btn-link btn-sm text-danger p-0" onclick="markAllRead()">Mark all read</button>
+                        </div>
+                        <div id="notifList" class="notif-list"></div>
+                    </div>
+                </div>
+                <span class="text-white" id="welcomeMessage">Welcome</span>
+                <button class="btn btn-outline-light btn-sm" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt me-1"></i>Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="padding-top:70px;">
+        <div class="row">
+
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column sidebar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-section="overview">
+                                <i class="fas fa-tachometer-alt me-2"></i>Overview
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="donors">
+                                <i class="fas fa-users me-2"></i>Find Donors
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="requests">
+                                <i class="fas fa-hand-holding-medical me-2"></i>Blood Requests
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="hospitals">
+                                <i class="fas fa-hospital me-2"></i>Hospitals
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="donations">
+                                <i class="fas fa-tint me-2"></i>My Donations
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="profile">
+                                <i class="fas fa-user me-2"></i>My Profile
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-section="analytics">
+                                <i class="fas fa-chart-bar me-2"></i>Analytics
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <a class="nav-link text-warning" href="request-blood.html">
+                                <i class="fas fa-plus-circle me-2"></i>New Request
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- Availability Toggle (for donors) -->
+                    <div class="availability-toggle mt-4 mx-3 d-none" id="availabilityToggleBox">
+                        <p class="text-muted small mb-2">Availability Status</p>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="availabilityToggle">
+                            <label class="form-check-label text-white small" for="availabilityToggle" id="availabilityLabel">Available</label>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+
+                <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom border-secondary">
+                    <h1 class="h4 text-white" id="pageTitle">Dashboard Overview</h1>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#requestModal">
+                        <i class="fas fa-exclamation-triangle me-1"></i>Emergency Request
+                    </button>
+                </div>
+
+                <!-- ── OVERVIEW ─────────────────────────────────────────── -->
+                <div id="overview-section" class="content-section">
+                    <div class="row mb-4">
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="dash-stat-card bg-primary">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1">Total Donors</p>
+                                        <h3 id="totalDonorsCount">—</h3>
+                                    </div>
+                                    <i class="fas fa-users fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="dash-stat-card bg-success">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1">Active Requests</p>
+                                        <h3 id="totalRequestsCount">—</h3>
+                                    </div>
+                                    <i class="fas fa-hand-holding-medical fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="dash-stat-card bg-warning text-dark">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1">Hospitals</p>
+                                        <h3 id="totalHospitalsCount">—</h3>
+                                    </div>
+                                    <i class="fas fa-hospital fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 mb-3">
+                            <div class="dash-stat-card bg-danger">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <p class="mb-1">Lives Saved</p>
+                                        <h3 id="livesSavedCount">—</h3>
+                                    </div>
+                                    <i class="fas fa-heart fa-2x opacity-50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <h5 class="text-white mb-3">Quick Actions</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <div class="quick-action-card" onclick="showSection('donors')">
+                                <i class="fas fa-search fa-2x text-primary mb-2"></i>
+                                <h6>Find Donors</h6>
+                                <p class="small text-muted">Search by blood group & location</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quick-action-card" onclick="location.href='request-blood.html'">
+                                <i class="fas fa-plus-circle fa-2x text-danger mb-2"></i>
+                                <h6>Request Blood</h6>
+                                <p class="small text-muted">Submit urgent blood requirements</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="quick-action-card" onclick="showSection('hospitals')">
+                                <i class="fas fa-hospital fa-2x text-success mb-2"></i>
+                                <h6>Find Hospitals</h6>
+                                <p class="small text-muted">Locate nearby blood banks</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Requests -->
+                    <h5 class="text-white mb-3"><i class="fas fa-exclamation-circle text-danger me-2"></i>Emergency Requests</h5>
+                    <div id="emergencyList" class="mb-4">
+                        <div class="text-muted">Loading...</div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <h5 class="text-white mb-3"><i class="fas fa-trophy text-warning me-2"></i>Top Donors</h5>
+                    <div id="leaderboard"></div>
+                </div>
+
+                <!-- ── FIND DONORS ──────────────────────────────────────── -->
+                <div id="donors-section" class="content-section d-none">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-3">
+                            <select class="form-select custom-input-dark" id="filterBlood">
+                                <option value="">All Blood Groups</option>
+                                <option>A+</option><option>A-</option>
+                                <option>B+</option><option>B-</option>
+                                <option>AB+</option><option>AB-</option>
+                                <option>O+</option><option>O-</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select custom-input-dark" id="filterDistrict">
+                                <option value="">All Districts</option>
+                                <option>Dhaka</option><option>Chittagong</option>
+                                <option>Sylhet</option><option>Rajshahi</option>
+                                <option>Khulna</option><option>Barisal</option>
+                                <option>Rangpur</option><option>Mymensingh</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-select custom-input-dark" id="filterAvailable">
+                                <option value="">All Status</option>
+                                <option value="1">Available Only</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button class="btn btn-danger w-100" onclick="searchDonors()">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                    <div id="donorGrid" class="row g-3"></div>
+                    <div id="donorPagination" class="mt-3 d-flex justify-content-center gap-2"></div>
+                </div>
+
+                <!-- ── BLOOD REQUESTS ──────────────────────────────────── -->
+                <div id="requests-section" class="content-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="d-flex gap-2">
+                            <select class="form-select form-select-sm custom-input-dark" id="reqFilterBlood" style="width:140px">
+                                <option value="">All Groups</option>
+                                <option>A+</option><option>A-</option>
+                                <option>B+</option><option>B-</option>
+                                <option>AB+</option><option>AB-</option>
+                                <option>O+</option><option>O-</option>
+                            </select>
+                            <select class="form-select form-select-sm custom-input-dark" id="reqFilterUrgency" style="width:160px">
+                                <option value="">All Urgency</option>
+                                <option value="Emergency">Emergency</option>
+                                <option value="Urgent">Urgent</option>
+                                <option value="Normal">Normal</option>
+                            </select>
+                            <button class="btn btn-danger btn-sm" onclick="loadRequests()">Filter</button>
+                        </div>
+                        <a href="request-blood.html" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-plus me-1"></i>New Request
+                        </a>
+                    </div>
+                    <div id="requestsList"></div>
+                    <div id="requestsPagination" class="mt-3 d-flex justify-content-center gap-2"></div>
+                </div>
+
+                <!-- ── HOSPITALS ───────────────────────────────────────── -->
+                <div id="hospitals-section" class="content-section d-none">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <select class="form-select custom-input-dark" id="hospFilterDistrict">
+                                <option value="">All Districts</option>
+                                <option>Dhaka</option><option>Chittagong</option>
+                                <option>Sylhet</option><option>Rajshahi</option>
+                                <option>Khulna</option><option>Barisal</option>
+                                <option>Rangpur</option><option>Mymensingh</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control custom-input-dark" id="hospSearch" placeholder="Search hospitals...">
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-danger w-100" onclick="loadHospitals()">
+                                <i class="fas fa-search me-2"></i>Search
+                            </button>
+                        </div>
+                    </div>
+                    <div id="hospitalGrid" class="row g-3"></div>
+                </div>
+
+                <!-- ── MY DONATIONS ────────────────────────────────────── -->
+                <div id="donations-section" class="content-section d-none">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-white mb-0">My Donation History</h5>
+                        <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#addDonationModal">
+                            <i class="fas fa-plus me-1"></i>Add Manual Entry
+                        </button>
+                    </div>
+                    <div id="donationHistory"></div>
+                </div>
+
+                <!-- ── PROFILE ─────────────────────────────────────────── -->
+                <div id="profile-section" class="content-section d-none">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="dash-card p-4 mb-4">
+                                <h5 class="text-white mb-4">Edit Profile</h5>
+                                <div id="alertProfile" class="alert d-none"></div>
+                                <form id="profileForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">Full Name</label>
+                                            <input type="text" class="form-control custom-input-dark" id="pName">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">Phone</label>
+                                            <input type="tel" class="form-control custom-input-dark" id="pPhone">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">District</label>
+                                            <select class="form-select custom-input-dark" id="pDistrict">
+                                                <option value="">Select</option>
+                                                <option>Dhaka</option><option>Chittagong</option>
+                                                <option>Sylhet</option><option>Rajshahi</option>
+                                                <option>Khulna</option><option>Barisal</option>
+                                                <option>Rangpur</option><option>Mymensingh</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">Upazila</label>
+                                            <input type="text" class="form-control custom-input-dark" id="pUpazila">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">Weight (kg)</label>
+                                            <input type="number" class="form-control custom-input-dark" id="pWeight">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label class="form-label text-light">Last Donation</label>
+                                            <input type="date" class="form-control custom-input-dark" id="pLastDonation">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label text-light">Address</label>
+                                        <textarea class="form-control custom-input-dark" id="pAddress" rows="2"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="fas fa-save me-2"></i>Save Changes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="dash-card p-4 text-center mb-4">
+                                <div class="profile-avatar mb-3" id="profileAvatar"></div>
+                                <h5 class="text-white" id="profileName">—</h5>
+                                <span class="badge bg-danger px-3 py-2 mb-2" id="profileBloodGroup">—</span>
+                                <p class="text-muted small" id="profileType">—</p>
+                                <hr class="border-secondary">
+                                <div class="text-start">
+                                    <p class="text-muted small mb-1"><i class="fas fa-map-marker-alt me-2 text-danger"></i><span id="profileLocation">—</span></p>
+                                    <p class="text-muted small mb-1"><i class="fas fa-phone me-2 text-danger"></i><span id="profilePhone">—</span></p>
+                                    <p class="text-muted small mb-0"><i class="fas fa-tint me-2 text-danger"></i>Donations: <span id="profileDonations">—</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── ANALYTICS ────────────────────────────────────────── -->
+                <div id="analytics-section" class="content-section d-none">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <div class="dash-card p-4">
+                                <h6 class="text-white mb-3">Blood Group Distribution</h6>
+                                <canvas id="bloodGroupChart" height="250"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dash-card p-4">
+                                <h6 class="text-white mb-3">Monthly Donations</h6>
+                                <canvas id="donationsChart" height="250"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dash-card p-4">
+                                <h6 class="text-white mb-3">Request Urgency Breakdown</h6>
+                                <canvas id="urgencyChart" height="250"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="dash-card p-4">
+                                <h6 class="text-white mb-3">Top Districts by Donors</h6>
+                                <canvas id="districtChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Emergency Request Modal -->
+    <div class="modal fade" id="requestModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content bg-dark border-danger">
+                <div class="modal-header border-danger">
+                    <h5 class="modal-title text-white"><i class="fas fa-exclamation-triangle text-danger me-2"></i>Emergency Blood Request</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalAlert" class="alert d-none"></div>
+                    <form id="bloodRequestForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Patient Name *</label>
+                                <input type="text" class="form-control custom-input-dark" id="mPatientName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Blood Group *</label>
+                                <select class="form-select custom-input-dark" id="mBloodGroup" required>
+                                    <option value="">Select</option>
+                                    <option>A+</option><option>A-</option>
+                                    <option>B+</option><option>B-</option>
+                                    <option>AB+</option><option>AB-</option>
+                                    <option>O+</option><option>O-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Units Needed *</label>
+                                <input type="number" class="form-control custom-input-dark" id="mUnits" min="1" value="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Urgency *</label>
+                                <select class="form-select custom-input-dark" id="mUrgency" required>
+                                    <option value="Emergency">🔴 Emergency</option>
+                                    <option value="Urgent">🟡 Urgent</option>
+                                    <option value="Normal">🟢 Normal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label text-light">Hospital *</label>
+                                <input type="text" class="form-control custom-input-dark" id="mHospital" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-light">Required Date *</label>
+                                <input type="datetime-local" class="form-control custom-input-dark" id="mDate" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Contact Person *</label>
+                                <input type="text" class="form-control custom-input-dark" id="mContact" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Phone *</label>
+                                <input type="tel" class="form-control custom-input-dark" id="mPhone" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-light">Notes</label>
+                            <textarea class="form-control custom-input-dark" id="mNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-danger">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="submitRequest">
+                        <i class="fas fa-paper-plane me-2"></i>Submit Request
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Donation Modal -->
+    <div class="modal fade" id="addDonationModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark border-danger">
+                <div class="modal-header border-danger">
+                    <h5 class="modal-title text-white"><i class="fas fa-tint text-danger me-2"></i>Add Donation Record</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDonationForm">
+                        <div class="mb-3">
+                            <label class="form-label text-light">Hospital Name *</label>
+                            <input type="text" class="form-control custom-input-dark" id="dHospital" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Units Donated</label>
+                                <input type="number" class="form-control custom-input-dark" id="dUnits" value="1" min="1">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-light">Donation Date</label>
+                                <input type="date" class="form-control custom-input-dark" id="dDate">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-light">Notes</label>
+                            <textarea class="form-control custom-input-dark" id="dNotes" rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-danger">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="submitDonation()">Save Record</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+
+</html>
