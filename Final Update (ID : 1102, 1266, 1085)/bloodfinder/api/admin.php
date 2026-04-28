@@ -209,7 +209,7 @@ switch ($action) {
         $session = requireAdmin();
         $db = getDB();
 
-        // 1. Blood group distribution among donors
+        // 1. Blood group distribution among donors.
         $bgStmt = $db->query("
             SELECT blood_group, COUNT(*) as count
             FROM users
